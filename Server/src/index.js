@@ -11,7 +11,7 @@ dotenv.config();
 // express app
 
 const PORT = process.env.PORT ; 
-const _dirname = path.resolve();
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
@@ -21,10 +21,6 @@ app.use(cors({
     credentials : true ,
 }));
 
-app.get("/", (req , res) =>{
-    res.status(200).send("Server is running !");
-});
-
 // User Route 
 app.use("/api/auth", authRoute);
 
@@ -32,14 +28,14 @@ app.use("/api/auth", authRoute);
 app.use("/api/messages", messageRoute);
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(_dirname,"../Client/dist")));
+    app.use(express.static(path.join(__dirname,"../Client/dist")));
 
     app.get("*", (req , res) => {
-        res.sendFile(path.join(_dirname, "../Client" , "dist" , "index.html"));
+        res.sendFile(path.join(__dirname, "../Client", "dist", "index.html"));
     })
 }
 
-server.listen(PORT ,()=>{
+server.listen(PORT ,()=> {
     console.log("Server is running on PORT :" , PORT);
     connectDB();
 });
